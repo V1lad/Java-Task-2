@@ -14,6 +14,9 @@ import java.util.Map;
 //   - @RequestMapping("/api/orders") — базовый путь для всех эндпоинтов
 //   - @RequiredArgsConstructor — Lombok генерирует конструктор для final-полей (DI)
 
+@RestController
+@RequestMapping("/api/orders")
+@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService service;
