@@ -14,6 +14,8 @@ import java.util.Map;
 //   - @RequestMapping("/api/orders") — базовый путь для всех эндпоинтов
 //   - @RequiredArgsConstructor — Lombok генерирует конструктор для final-полей (DI)
 
+// Аннотации добавлены
+
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -26,28 +28,37 @@ public class OrderController {
     //   - Вызывает service.create(order)
     //   - Возвращает ResponseEntity со статусом 201 и созданным заказом в теле
     //   Подсказка: return ResponseEntity.status(201).body(service.create(order));
+
+    @PostMapping
     public ResponseEntity<Order> create(@RequestBody Order order) {
-        throw new UnsupportedOperationException("TODO 9: implement create endpoint");
+        Order created = service.create(order);
+        return ResponseEntity.status(201).body(created);
     }
 
     // TODO 10: Добавьте аннотацию @GetMapping и реализуйте метод list:
     //   - Возвращает все заказы через service.findAll()
+
+    @GetMapping
     public Collection<Order> list() {
-        throw new UnsupportedOperationException("TODO 10: implement list endpoint");
+        return service.findAll();
     }
 
     // TODO 11: Добавьте аннотацию @GetMapping("/{id}") и реализуйте метод get:
     //   - Принимает id из URL (аннотация @PathVariable)
     //   - Возвращает заказ через service.findById(id)
+
+    @GetMapping("/{id}")
     public Order get(@PathVariable String id) {
-        throw new UnsupportedOperationException("TODO 11: implement get endpoint");
+        return service.findById(id);
     }
 
     // TODO 12: Добавьте аннотацию @PutMapping("/{id}") и реализуйте метод update:
     //   - Принимает id из URL (@PathVariable) и Order из тела (@RequestBody)
     //   - Возвращает обновлённый заказ через service.update(id, order)
+
+    @PutMapping("/{id}")
     public Order update(@PathVariable String id, @RequestBody Order order) {
-        throw new UnsupportedOperationException("TODO 12: implement update endpoint");
+        return service.update(id, order);
     }
 
     // TODO 13: Добавьте аннотацию @DeleteMapping("/{id}") и реализуйте метод delete:
@@ -55,13 +66,18 @@ public class OrderController {
     //   - Вызывает service.delete(id)
     //   - Возвращает ResponseEntity без тела со статусом 204
     //   Подсказка: return ResponseEntity.noContent().build();
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
-        throw new UnsupportedOperationException("TODO 13: implement delete endpoint");
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     // TODO 14: Добавьте аннотацию @GetMapping("/stats") и реализуйте метод stats:
     //   - Возвращает Map со статистикой через service.stats()
+
+    @GetMapping("/stats")
     public Map<String, Object> stats() {
-        throw new UnsupportedOperationException("TODO 14: implement stats endpoint");
+        return service.stats();
     }
 }
