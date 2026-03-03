@@ -20,18 +20,21 @@ public class OrderService {
         //      (используйте order.product(), order.quantity(), order.price())
         //   3. Положите его в store по ключу id
         //   4. Верните сохранённый объект
-        throw new UnsupportedOperationException("TODO 2: implement create");
+
+        String id = UUID.randomUUID().toString();
+        Order newOrder = new Order(id, order.product(), order.quantity(), order.price());
+        store.put(id, newOrder);
+        return newOrder;
     }
 
     public Order findById(String id) {
         // TODO 3: Верните заказ из store по id
-        throw new UnsupportedOperationException("TODO 3: implement findById");
+        return store.get(id);
     }
 
     public Collection<Order> findAll() {
         // TODO 4: Верните все заказы из store
-        // Подсказка: store.values()
-        throw new UnsupportedOperationException("TODO 4: implement findAll");
+        return store.values();
     }
 
     public Order update(String id, Order order) {
@@ -39,12 +42,15 @@ public class OrderService {
         //   1. Создайте новый Order с переданным id и полями из order
         //   2. Замените объект в store
         //   3. Верните обновлённый объект
-        throw new UnsupportedOperationException("TODO 5: implement update");
+
+        Order updatedOrder = new Order(id, order.product(), order.quantity(), order.price());
+        store.put(id, updatedOrder);
+        return updatedOrder;
     }
 
     public void delete(String id) {
         // TODO 6: Удалите заказ из store по id
-        throw new UnsupportedOperationException("TODO 6: implement delete");
+        store.remove(id);
     }
 
     public Map<String, Object> stats() {
@@ -53,6 +59,13 @@ public class OrderService {
         //      Подсказка: store.values().stream().mapToDouble(o -> o.price() * o.quantity()).sum()
         //   2. Верните Map с ключами "totalOrders" (количество) и "totalSum" (сумма)
         //      Подсказка: Map.of("totalOrders", ..., "totalSum", ...)
-        throw new UnsupportedOperationException("TODO 7: implement stats");
+
+        int totalOrders = store.size();
+        double totalSum = store.values().stream().mapToDouble(o -> o.price() * o.quantity()).sum();
+
+        return Map.of(
+                "totalOrders", totalOrders,
+                "totalSum", totalSum
+        );
     }
 }
